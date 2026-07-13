@@ -111,7 +111,7 @@ export default function DestinationSearch() {
             className="px-6 py-3.5 bg-gradient-to-r from-primary to-secondary text-white text-xs font-black uppercase tracking-widest rounded-xl transition-all shadow hover:shadow-lg hover:scale-103 flex items-center gap-2"
           >
             <Search className="h-4 w-4" />
-            Search Trips
+            Search
           </button>
           <button
             onClick={handleBuildCustom}

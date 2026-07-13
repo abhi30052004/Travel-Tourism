@@ -41,7 +41,7 @@ export default function WishlistPage() {
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-wider text-[#4a241a]">My Wishlist</h1>
           <div className="h-1 w-20 bg-secondary mx-auto" />
           <p className="text-sm text-[#6f5a52] leading-relaxed">
-            Keep track of your dream African itineraries. Review your choices and request a personalized safari proposal based on your favorited trips.
+            Keep track of your dream African itineraries. Review your choices and request a personalized safari proposal based on your favorited .
           </p>
         </div>
 

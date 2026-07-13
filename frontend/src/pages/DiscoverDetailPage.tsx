@@ -85,7 +85,7 @@ export default function DiscoverDetailPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
-        
+
         {/* Main Content */}
         <div className="lg:col-span-8 space-y-12">
           <div className="space-y-4">
@@ -157,7 +157,7 @@ export default function DiscoverDetailPage() {
               </div>
               <div>
                 <h4 className="font-extrabold text-sm">Elisa van der Meer</h4>
-                <p className="text-[10px] text-gray-400 font-semibold">East Africa Safari Specialist</p>
+                <p className="text-[10px] text-gray-400 font-semibold">East City travel Specialist</p>
               </div>
             </div>
             <div className="space-y-2 text-xs font-bold text-onSurface text-left border-t border-gray-100 pt-4">
@@ -167,7 +167,7 @@ export default function DiscoverDetailPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>specialist@africasafaritrips.com</span>
+                <span>specialist@africasafari.com</span>
               </div>
             </div>
           </div>

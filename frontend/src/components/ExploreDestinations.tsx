@@ -48,7 +48,7 @@ export default function ExploreDestinations() {
             </h2>
             <div className="h-1 w-20 bg-secondary" />
             <p className="text-sm md:text-base leading-relaxed text-[#6f5a52]">
-              Africa Safari Trips is a registered and highly accredited safari organizer based in East Africa. Together with our local teams, we specialize in organizing private, tailor-made luxury and mid-range safaris in Kenya, Uganda, Tanzania, and South Africa. We pride ourselves on creating personalized travel itineraries that match your wishes, travel pace, and budget.
+              City travel  is a registered and highly accredited safari organizer based in East Africa. Together with our local teams, we specialize in organizing private, tailor-made luxury and mid-range safaris in Kenya, Uganda, Tanzania, and South Africa. We pride ourselves on creating personalized travel itineraries that match your wishes, travel pace, and budget.
             </p>
             <p className="text-sm md:text-base leading-relaxed text-[#6f5a52]">
               Whether you are looking to witness the Great Wildebeest Migration in the Serengeti or Maasai Mara, track mountain gorillas in Bwindi Impenetrable Forest, or relax on the white sandy beaches of Zanzibar, we have the local expertise and passion to make it happen.

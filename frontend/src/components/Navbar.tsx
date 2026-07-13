@@ -209,10 +209,10 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4 md:px-8 flex items-center justify-between">
 
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <span className="font-extrabold text-xl tracking-tight text-onSurface flex items-center gap-1">
-              <span className="text-primary">AFRICA</span>
-              <span className="bg-secondary text-white px-2 py-0.5 rounded text-sm font-black rotate-[-2deg] shadow-sm">SAFARI</span>
-              <span className="text-xs text-muted block -mt-1">TRIPS.COM</span>
+            <span className="flex items-center gap-1.5 mt-1">
+              <span className="font-playfair font-black italic text-4xl tracking-tight text-primary leading-none">City</span>
+              <span className="font-montserrat font-extrabold text-xs tracking-[0.2em] uppercase bg-secondary text-white px-2.5 py-1 rounded shadow-sm">travel</span>
+              <span className="text-[10px] text-muted tracking-widest font-montserrat uppercase font-bold mt-1">.COM</span>
             </span>
           </Link>
 

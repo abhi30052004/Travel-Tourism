@@ -3,6 +3,11 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        caveat: ['Caveat', 'cursive'],
+        playfair: ['"Playfair Display"', 'serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         primary: '#cc4b25',
         secondary: '#e4a435',

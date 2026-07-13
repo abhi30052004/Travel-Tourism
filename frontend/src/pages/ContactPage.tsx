@@ -19,7 +19,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[#f7f2ea] pt-28 pb-16 font-sans text-[#3d1f17]">
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-block text-xs font-black uppercase tracking-widest text-primary">Contact Us</span>
@@ -62,7 +62,7 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5 text-[#e4a435] shrink-0 mt-1" />
                   <div>
                     <h4 className="font-extrabold text-sm">Email Inquiries</h4>
-                    <p className="text-xs text-gray-300">specialist@africasafaritrips.com</p>
+                    <p className="text-xs text-gray-300">specialist@africasafari.com</p>
                   </div>
                 </div>
 
@@ -87,7 +87,7 @@ export default function ContactPage() {
           {/* Form */}
           <div className="lg:col-span-7 bg-white p-8 md:p-10 rounded-3xl border border-gray-200 shadow-sm">
             <h3 className="text-xl font-extrabold uppercase text-[#4a241a] mb-6">Send A Message</h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
