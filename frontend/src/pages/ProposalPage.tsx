@@ -89,7 +89,7 @@ export default function ProposalPage() {
   return (
     <div className="min-h-screen bg-[#f7f2ea] pt-24 pb-16 font-sans">
       <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Left side: Proposal Form */}
         <div className="lg:col-span-2 bg-[#4a241a] text-white p-6 md:p-10 rounded-2xl shadow-xl">
           <div className="flex justify-between items-center mb-6">
@@ -106,7 +106,7 @@ export default function ProposalPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            
+
             {/* 1. Countries */}
             <div className="space-y-3">
               <label className="block text-xs font-black uppercase tracking-widest text-[#e4a435]">
@@ -118,11 +118,10 @@ export default function ProposalPage() {
                     key={c}
                     type="button"
                     onClick={() => handleCountryChange(c)}
-                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${
-                      formData.countries.includes(c)
-                        ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
-                        : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
-                    }`}
+                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${formData.countries.includes(c)
+                      ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
+                      : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
+                      }`}
                   >
                     {c}
                   </button>
@@ -141,11 +140,10 @@ export default function ProposalPage() {
                     key={a}
                     type="button"
                     onClick={() => handleActivityChange(a)}
-                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${
-                      formData.activities.includes(a)
-                        ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
-                        : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
-                    }`}
+                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${formData.activities.includes(a)
+                      ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
+                      : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
+                      }`}
                   >
                     {a}
                   </button>
@@ -187,11 +185,10 @@ export default function ProposalPage() {
                     key={comp}
                     type="button"
                     onClick={() => setFormData({ ...formData, companion: comp })}
-                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${
-                      formData.companion === comp
-                        ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
-                        : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
-                    }`}
+                    className={`p-3 rounded-lg border text-xs font-extrabold transition-all text-center ${formData.companion === comp
+                      ? 'border-[#e4a435] bg-[#e4a435] text-[#3d1f17] shadow-lg'
+                      : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
+                      }`}
                   >
                     {comp}
                   </button>
@@ -469,7 +466,7 @@ export default function ProposalPage() {
           {/* Guarantees List */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
             <h3 className="text-sm font-extrabold text-onSurface uppercase tracking-wide border-b border-gray-100 pb-2">
-              Make your dream trip come true with Africa Safari Trips
+              Make your dream trip come true with City travel
             </h3>
             <div className="space-y-3">
               {[

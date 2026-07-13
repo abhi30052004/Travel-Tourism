@@ -42,7 +42,7 @@ export const heroSlides = [
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
     title: 'Diani Beach Retreat',
     subtitle: 'Relax by the turquoise waters and white sands of the Indian Ocean',
-    primaryCta: 'Explore Coastal Trips',
+    primaryCta: 'Explore Coastal ',
     secondaryCta: 'Inquire Now',
     location: 'Diani, Kenya',
     rating: '4.9',

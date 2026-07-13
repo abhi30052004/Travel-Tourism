@@ -10,13 +10,12 @@ export default function Footer() {
           {/* Column 1: Brand & Contact Info */}
           <div className="space-y-6">
             {/* Logo from the snap */}
-            <div className="flex flex-col items-start leading-none font-black text-left">
-              <span className="text-xl tracking-widest text-[#2d1e18]">AFRICA</span>
-              <div className="flex items-center gap-1 mt-0.5">
-                <span className="text-xl tracking-widest text-[#2d1e18]">SAFARI</span>
-                <span className="bg-[#e4a435] text-[#2d1e18] px-2 py-1 rounded-full text-[10px] font-black tracking-tighter">.COM</span>
+            <div className="flex flex-col items-start leading-none text-left">
+              <span className="font-playfair font-black italic text-5xl tracking-tight text-[#2d1e18] leading-none">City</span>
+              <div className="flex items-center gap-1.5 mt-2 mb-1">
+                <span className="bg-[#e4a435] text-[#2d1e18] px-2.5 py-1 rounded font-montserrat font-extrabold text-xs tracking-[0.2em] uppercase shadow-sm">travel</span>
+                <span className="text-[10px] tracking-widest font-montserrat uppercase font-bold text-[#2d1e18]">.COM</span>
               </div>
-              <span className="text-xl tracking-widest text-[#2d1e18] mt-0.5">TRIPS</span>
             </div>
 
             {/* Phone contact */}
@@ -28,7 +27,7 @@ export default function Footer() {
 
             {/* Vertical Legal Links */}
             <div className="space-y-2.5 pt-4 text-xs font-bold text-[#6f5a52]">
-              <p className="text-[#2d1e18]">&copy; 2026 Afrika Safari B.V.</p>
+              <p className="text-[#2d1e18]">&copy; 2026 City travel  B.V.</p>
               <div>
                 <a href="#" className="underline hover:text-primary transition-colors block py-0.5">Terms and conditions</a>
                 <a href="#" className="underline hover:text-primary transition-colors block py-0.5">Privacy policy</a>
@@ -37,9 +36,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: OUR TRIPS */}
+          {/* Column 2: OUR  */}
           <div>
-            <h4 className="font-black uppercase tracking-widest text-xs text-[#2d1e18] mb-6">OUR TRIPS</h4>
+            <h4 className="font-black uppercase tracking-widest text-xs text-[#2d1e18] mb-6">OUR </h4>
             <ul className="space-y-4 text-sm font-bold text-[#2d1e18]">
               <li><a href="#destinations" className="hover:text-primary transition-colors block">Uganda Tours</a></li>
               <li><a href="#destinations" className="hover:text-primary transition-colors block">Uganda safari</a></li>
@@ -61,7 +60,7 @@ export default function Footer() {
               <li><a href="#" className="hover:text-primary transition-colors block">Our Guarantees</a></li>
               <li><a href="#" className="hover:text-primary transition-colors block">Responsible Travel</a></li>
               <li><a href="#" className="hover:text-primary transition-colors block">Flying Doctors</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors block">About Africa Safari Trips</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors block">About City travel </a></li>
               <li><a href="#" className="underline hover:text-primary transition-colors block">View all frequently asked questions</a></li>
             </ul>
           </div>

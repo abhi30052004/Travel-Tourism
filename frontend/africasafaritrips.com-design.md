@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: Africa Safari Trips
+name: City travel 
 description: A warm, adventure-led travel brand with bold calls to action, earthy surfaces, and playful editorial accents.
 colors:
   primary: "#cc4b25"
@@ -144,11 +144,11 @@ components:
     padding: "32px"
 ---
 
-# Africa Safari Trips
+# City travel 
 
 ## Overview
 
-Africa Safari Trips feels warm, confident, and highly promotional, with a clear emphasis on trust and conversion. The experience balances practical trip-planning with adventurous storytelling, combining earthy neutrals, strong orange accents, and a playful handwritten display style for emphasis. It is designed for travelers who want reassurance, expertise, and an easy path to booking, while still feeling inspired by the destination.
+City travel  feels warm, confident, and highly promotional, with a clear emphasis on trust and conversion. The experience balances practical trip-planning with adventurous storytelling, combining earthy neutrals, strong orange accents, and a playful handwritten display style for emphasis. It is designed for travelers who want reassurance, expertise, and an easy path to booking, while still feeling inspired by the destination.
 
 ## Colors
 
