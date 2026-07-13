@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Feed
 from app.models import RssSource
-from app.schemas import FeedApprovalRequest
+from app.schemas import FeedApprovalRequest, FeedUpdate
 from app.schemas import RssSourceCreate
 from app.schemas import RssSourceUpdate
 from app.services.rss_service import RSSService
@@ -596,3 +596,37 @@ def reject_feed(
         "message": "Feed rejected",
         "feed": feed
     }
+
+
+@router.put("/{feed_id}")
+def update_feed(
+    feed_id: int,
+    payload: FeedUpdate,
+    db: Session = Depends(get_db)
+):
+    feed = db.query(Feed).filter(Feed.id == feed_id).first()
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+    
+    updates = payload.model_dump(exclude_unset=True)
+    for field, value in updates.items():
+        setattr(feed, field, value)
+        
+    db.commit()
+    db.refresh(feed)
+    return feed
+
+
+@router.delete("/{feed_id}")
+def delete_feed(
+    feed_id: int,
+    db: Session = Depends(get_db)
+):
+    feed = db.query(Feed).filter(Feed.id == feed_id).first()
+    if not feed:
+        raise HTTPException(status_code=404, detail="Feed not found")
+    
+    db.delete(feed)
+    db.commit()
+    return {"message": "Feed deleted successfully"}
+

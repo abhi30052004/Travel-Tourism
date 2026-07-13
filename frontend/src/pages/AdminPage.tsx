@@ -13,6 +13,7 @@ import {
   Settings,
   ThumbsUp,
   Plane,
+  Globe,
 } from 'lucide-react';
 import { clearAdminSession, getAdminToken, getAdminUser, verifyAdminSession } from '../lib/admin-api';
 import AdminDashboard from '../app/admin/page';
@@ -23,12 +24,14 @@ import PublishingPage from '../app/admin/publishing/page';
 import AnalyticsPage from '../app/admin/analytics/page';
 import SettingsPage from '../app/admin/settings/page';
 import AdminLoginPage from '../app/admin/login/page';
+import AdminWebsitePage from '../app/admin/website/page';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true, group: 'main' },
   { href: '/admin/rss', label: 'RSS Agent', icon: Rss, group: 'workflow', badge: '1', badgeTitle: 'Step 1–2: Fetch & AI Score' },
   { href: '/admin/approval', label: 'AI Post Approval', icon: ThumbsUp, group: 'workflow', badge: '2', badgeTitle: 'Generated Content Preview & Approval' },
   { href: '/admin/publishing', label: 'Auto Publishing', icon: Send, group: 'workflow', badge: '3', badgeTitle: 'Step 6: Social Media' },
+  { href: '/admin/website', label: 'Website Editor', icon: Globe, group: 'main' },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart3, group: 'main' },
   { href: '/admin/settings', label: 'Settings', icon: Settings, group: 'main' },
 ];
@@ -178,6 +181,7 @@ export default function AdminPage() {
               <Route path="/verification" element={<VerificationPage />} />
               <Route path="/approval" element={<ApprovalPage />} />
               <Route path="/publishing" element={<PublishingPage />} />
+              <Route path="/website" element={<AdminWebsitePage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Routes>

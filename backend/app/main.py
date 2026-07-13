@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.database import Base
+from app.database import Base, SessionLocal, seed_initial_data
 from app.database import ensure_database_schema
 from app.database import engine
 
@@ -17,6 +17,7 @@ from app.routers.feeds import router as feeds_router
 from app.routers.publish import router as publish_router
 from app.routers.scoring import router as scoring_router
 from app.routers.validation import router as validation_router
+from app.routers.website import router as website_router
 from app.services.scheduler_service import SchedulerService
 from fastapi import Depends
 
@@ -24,6 +25,10 @@ from fastapi import Depends
 # Create tables
 Base.metadata.create_all(bind=engine)
 ensure_database_schema()
+
+# Seed initial data
+with SessionLocal() as db_session:
+    seed_initial_data(db_session)
 
 app = FastAPI(
     title=APP_NAME,
@@ -59,6 +64,7 @@ app.mount(
 # =====================================
 
 app.include_router(auth_router)
+app.include_router(website_router)
 app.include_router(feeds_router, dependencies=[Depends(require_admin)])
 app.include_router(scoring_router, dependencies=[Depends(require_admin)])
 app.include_router(content_router, dependencies=[Depends(require_admin)])

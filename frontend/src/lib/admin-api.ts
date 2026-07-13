@@ -818,4 +818,162 @@ export async function fetchDashboardStats(): Promise<DashboardStats> {
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+// ─── Website Content & CRUD API ─────────────────────────────────────────────
+
+export interface Destination {
+  id: string;
+  name: string;
+  tagline: string | null;
+  desc: string | null;
+  image: string | null;
+  packages?: Package[];
+}
+
+export interface Package {
+  id: number;
+  destination_id: string;
+  name: string;
+  duration: string | null;
+  price: number | null;
+  image: string | null;
+  highlights: string | null;
+}
+
+export interface DiscoverPage {
+  id: string;
+  title: string;
+  tagline: string | null;
+  heroImage: string | null;
+  content: string | null;
+  subSections: string | null; // JSON Stringified
+  rules: string | null; // JSON Stringified
+  tips: string | null; // JSON Stringified
+}
+
+// Destination API calls
+export async function fetchDestinations(): Promise<Destination[]> {
+  try {
+    return await apiRequest<Destination[]>('/website/destinations');
+  } catch {
+    await delay(200);
+    return [];
+  }
+}
+
+export async function fetchDestination(id: string): Promise<Destination> {
+  return await apiRequest<Destination>(`/website/destinations/${id}`);
+}
+
+export async function createDestination(payload: Destination): Promise<Destination> {
+  return await apiRequest<Destination>('/website/destinations', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function updateDestination(id: string, payload: Partial<Destination>): Promise<Destination> {
+  return await apiRequest<Destination>(`/website/destinations/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deleteDestination(id: string): Promise<void> {
+  await apiRequest<void>(`/website/destinations/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+// Package API calls
+export async function fetchPackages(): Promise<Package[]> {
+  try {
+    return await apiRequest<Package[]>('/website/packages');
+  } catch {
+    await delay(200);
+    return [];
+  }
+}
+
+export async function createPackage(payload: Omit<Package, 'id'>): Promise<Package> {
+  return await apiRequest<Package>('/website/packages', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function updatePackage(id: number, payload: Partial<Package>): Promise<Package> {
+  return await apiRequest<Package>(`/website/packages/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deletePackage(id: number): Promise<void> {
+  await apiRequest<void>(`/website/packages/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+// Discover Page API calls
+export async function fetchDiscoverPages(): Promise<DiscoverPage[]> {
+  try {
+    return await apiRequest<DiscoverPage[]>('/website/discover');
+  } catch {
+    await delay(200);
+    return [];
+  }
+}
+
+export async function fetchDiscoverPage(id: string): Promise<DiscoverPage> {
+  return await apiRequest<DiscoverPage>(`/website/discover/${id}`);
+}
+
+export async function createDiscoverPage(payload: DiscoverPage): Promise<DiscoverPage> {
+  return await apiRequest<DiscoverPage>('/website/discover', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function updateDiscoverPage(id: string, payload: Partial<DiscoverPage>): Promise<DiscoverPage> {
+  return await apiRequest<DiscoverPage>(`/website/discover/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deleteDiscoverPage(id: string): Promise<void> {
+  await apiRequest<void>(`/website/discover/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+// Feed & Content Direct Edit/Delete API calls
+export async function updateFeed(feedId: number, payload: any): Promise<Feed> {
+  return await apiRequest<Feed>(`/rss-feeds/${feedId}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deleteFeed(feedId: number): Promise<void> {
+  await apiRequest<void>(`/rss-feeds/${feedId}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function updateGeneratedContent(contentId: number, payload: any): Promise<GeneratedContent> {
+  return await apiRequest<GeneratedContent>(`/content/${contentId}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deleteGeneratedContent(contentId: number): Promise<void> {
+  await apiRequest<void>(`/content/${contentId}`, {
+    method: 'DELETE',
+  });
+}
+
  

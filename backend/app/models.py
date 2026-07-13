@@ -462,3 +462,133 @@ class AgentRun(Base):
         DateTime,
         default=datetime.utcnow
     )
+
+
+# =====================================================
+# DESTINATIONS
+# =====================================================
+
+class Destination(Base):
+
+    __tablename__ = "destinations"
+
+    id = Column(
+        String(100),
+        primary_key=True,
+        index=True
+    )
+
+    name = Column(
+        String(255),
+        nullable=False
+    )
+
+    tagline = Column(
+        String(500)
+    )
+
+    desc = Column(
+        Text
+    )
+
+    image = Column(
+        String(1000)
+    )
+
+    packages = relationship(
+        "Package",
+        back_populates="destination",
+        cascade="all, delete-orphan"
+    )
+
+
+# =====================================================
+# PACKAGES
+# =====================================================
+
+class Package(Base):
+
+    __tablename__ = "packages"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True
+    )
+
+    destination_id = Column(
+        String(100),
+        ForeignKey("destinations.id"),
+        nullable=False
+    )
+
+    name = Column(
+        String(255),
+        nullable=False
+    )
+
+    duration = Column(
+        String(100)
+    )
+
+    price = Column(
+        Float
+    )
+
+    image = Column(
+        String(1000)
+    )
+
+    highlights = Column(
+        Text  # comma-separated highlights
+    )
+
+    destination = relationship(
+        "Destination",
+        back_populates="packages"
+    )
+
+
+# =====================================================
+# DISCOVER PAGES (GUIDES)
+# =====================================================
+
+class DiscoverPage(Base):
+
+    __tablename__ = "discover_pages"
+
+    id = Column(
+        String(100),
+        primary_key=True,
+        index=True
+    )
+
+    title = Column(
+        String(255),
+        nullable=False
+    )
+
+    tagline = Column(
+        String(500)
+    )
+
+    heroImage = Column(
+        String(1000)
+    )
+
+    content = Column(
+        Text
+    )
+
+    subSections = Column(
+        Text  # JSON string of array of subsections: {title, desc, image}
+    )
+
+    rules = Column(
+        Text  # JSON string or newline-separated rules
+    )
+
+    tips = Column(
+        Text  # JSON string or newline-separated tips
+    )
+

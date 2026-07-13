@@ -206,3 +206,107 @@ class AdminLoginResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     username: str
+
+
+# =====================================================
+# DESTINATIONS
+# =====================================================
+
+class DestinationBase(OrmSchema):
+    id: str
+    name: str
+    tagline: str | None = None
+    desc: str | None = None
+    image: str | None = None
+
+class DestinationCreate(DestinationBase):
+    pass
+
+class DestinationUpdate(BaseModel):
+    name: str | None = None
+    tagline: str | None = None
+    desc: str | None = None
+    image: str | None = None
+
+
+# =====================================================
+# PACKAGES
+# =====================================================
+
+class PackageBase(OrmSchema):
+    id: int
+    destination_id: str
+    name: str
+    duration: str | None = None
+    price: float | None = None
+    image: str | None = None
+    highlights: str | None = None
+
+class PackageCreate(BaseModel):
+    destination_id: str
+    name: str
+    duration: str | None = None
+    price: float | None = None
+    image: str | None = None
+    highlights: str | None = None
+
+class PackageUpdate(BaseModel):
+    destination_id: str | None = None
+    name: str | None = None
+    duration: str | None = None
+    price: float | None = None
+    image: str | None = None
+    highlights: str | None = None
+
+
+# =====================================================
+# DISCOVER PAGES
+# =====================================================
+
+class DiscoverPageBase(OrmSchema):
+    id: str
+    title: str
+    tagline: str | None = None
+    heroImage: str | None = None
+    content: str | None = None
+    subSections: str | None = None
+    rules: str | None = None
+    tips: str | None = None
+
+class DiscoverPageCreate(DiscoverPageBase):
+    pass
+
+class DiscoverPageUpdate(BaseModel):
+    title: str | None = None
+    tagline: str | None = None
+    heroImage: str | None = None
+    content: str | None = None
+    subSections: str | None = None
+    rules: str | None = None
+    tips: str | None = None
+
+
+# =====================================================
+# FEEDS & CONTENT UPDATES
+# =====================================================
+
+class FeedUpdate(BaseModel):
+    title: str | None = None
+    summary: str | None = None
+    city: str | None = None
+    category: str | None = None
+    relevance_score: float | None = None
+    scoring_reason: str | None = None
+    approval_status: str | None = None
+
+class GeneratedContentUpdate(BaseModel):
+    headline: str | None = None
+    content: str | None = None
+    excerpt: str | None = None
+    seo_title: str | None = None
+    seo_description: str | None = None
+    keywords: str | None = None
+    hashtags: str | None = None
+    featured_image_url: str | None = None
+    status: str | None = None
+

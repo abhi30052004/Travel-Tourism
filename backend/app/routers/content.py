@@ -9,7 +9,7 @@ from app.models import GeneratedContent
 from app.schemas import ContentApprovalRequest
 from app.schemas import ContentGenerateRequest
 from app.schemas import ContentRegenerateRequest
-from app.schemas import ContentRejectionRequest
+from app.schemas import ContentRejectionRequest, GeneratedContentUpdate
 from app.services.content_service import ContentService
 from app.services.image_generation_service import ImageGenerationService
 
@@ -168,3 +168,37 @@ def reject_content(
         raise HTTPException(status_code=404, detail="Content not found")
 
     return content
+
+
+@router.put("/{content_id}")
+def update_content(
+    content_id: int,
+    payload: GeneratedContentUpdate,
+    db: Session = Depends(get_db)
+):
+    content = db.query(GeneratedContent).filter(GeneratedContent.id == content_id).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+    
+    updates = payload.model_dump(exclude_unset=True)
+    for field, value in updates.items():
+        setattr(content, field, value)
+        
+    db.commit()
+    db.refresh(content)
+    return serialize_content(content)
+
+
+@router.delete("/{content_id}")
+def delete_content(
+    content_id: int,
+    db: Session = Depends(get_db)
+):
+    content = db.query(GeneratedContent).filter(GeneratedContent.id == content_id).first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+    
+    db.delete(content)
+    db.commit()
+    return {"message": "Content deleted successfully"}
+

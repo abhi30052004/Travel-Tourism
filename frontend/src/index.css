@@ -16,6 +16,9 @@
     --border: #e5e7eb;
     --neutral: #ffffff;
     --error: #b3261e;
+    --forest-green: #2d6a4f;
+    --cream: #FFF8E7;
+    --charcoal: #36454F;
   }
 
   body {
@@ -25,7 +28,12 @@
     font-weight: 500;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: var(--on-surface);
   }
@@ -84,7 +92,7 @@
 
 @layer utilities {
   .text-shadow {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .scrollbar-hide {
@@ -98,7 +106,15 @@
 }
 
 @keyframes sunsetShift {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
 }

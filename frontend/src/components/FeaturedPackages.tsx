@@ -1,14 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Check, ArrowRight, Heart } from 'lucide-react';
-import { travelPackages, packageCategories } from '../data/siteData';
 import { useNavigate } from 'react-router-dom';
+import { fetchDestinations, fetchPackages, Destination, Package } from '../lib/admin-api';
 
 export default function FeaturedPackages() {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('Luxury Packages');
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [activeDestId, setActiveDestId] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const saved = localStorage.getItem('wishlist');
@@ -19,53 +22,37 @@ export default function FeaturedPackages() {
         console.error(e);
       }
     }
+
+    Promise.all([fetchDestinations(), fetchPackages()])
+      .then(([dests, pkgs]) => {
+        setDestinations(dests);
+        setPackages(pkgs);
+        if (dests.length > 0) {
+          setActiveDestId(dests[0].id);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error loading packages/destinations:', err);
+        setLoading(false);
+      });
   }, []);
 
   const toggleFavorite = (id: string) => {
-    // Normalize id prefix for matching base package data
-    const baseId = id.split('-')[0];
     let updated: string[];
-    if (favorites.includes(baseId)) {
-      updated = favorites.filter((x) => x !== baseId);
+    if (favorites.includes(id)) {
+      updated = favorites.filter((x) => x !== id);
     } else {
-      updated = [...favorites, baseId];
+      updated = [...favorites, id];
     }
     setFavorites(updated);
     localStorage.setItem('wishlist', JSON.stringify(updated));
     window.dispatchEvent(new Event('wishlist-update'));
   };
 
-  const categoryPackages = travelPackages.filter(
-    (p) => p.category === activeCategory
+  const filteredPackages = packages.filter(
+    (p) => p.destination_id === activeDestId
   );
-
-  const demoVariants = [
-    { suffix: 'Experience', label: 'View Demo', query: 'experience' },
-    { suffix: 'Signature', label: 'Live Tour', query: 'signature' },
-    { suffix: 'Elite', label: 'Preview', query: 'elite' },
-  ];
-
-  const filtered =
-    categoryPackages.length > 0
-      ? Array.from({ length: 3 }, (_, index) => {
-          const basePackage = categoryPackages[index % categoryPackages.length];
-          const variant = demoVariants[index] ?? {
-            suffix: `Variant ${index + 1}`,
-            label: 'View Demo',
-            query: `variant-${index + 1}`,
-          };
-          const demoLink = basePackage.demoLink
-            ? `${basePackage.demoLink}?variant=${variant.query}`
-            : '#';
-
-          return {
-            ...basePackage,
-            id: `${basePackage.id}-${index}`,
-            name: `${basePackage.name} — ${variant.suffix}`,
-            demoLink,
-          };
-        })
-      : [];
 
   const scroll = (dir: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -100,19 +87,19 @@ export default function FeaturedPackages() {
           </p>
         </motion.div>
 
-        {/* Category Toggles */}
+        {/* Destination Toggles */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {packageCategories.map((cat) => (
+          {destinations.map((dest) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={dest.id}
+              onClick={() => setActiveDestId(dest.id)}
               className={`rounded-full px-6 py-2.5 text-xs font-black uppercase tracking-wider transition-all duration-300 ${
-                activeCategory === cat
+                activeDestId === dest.id
                   ? 'bg-primary text-white shadow-lg'
                   : 'border border-gray-300 text-[#6f5a52] hover:border-primary hover:text-primary'
               }`}
             >
-              {cat}
+              {dest.name}
             </button>
           ))}
         </div>
@@ -137,87 +124,101 @@ export default function FeaturedPackages() {
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
           >
-            <AnimatePresence mode="wait">
-              {filtered.map((pkg, i) => (
-                <div
-                  key={pkg.id}
-                  className="min-w-full md:min-w-[48%] lg:min-w-[31.5%] flex-shrink-0 group"
-                >
-                  <div className="card-hover rounded-2xl overflow-hidden bg-[#f7f2ea] border border-gray-200 shadow-md">
-                    <div className="image-zoom relative h-60 overflow-hidden">
-                      <img
-                        src={pkg.image}
-                        alt={pkg.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      
-                      <button
-                        onClick={() => toggleFavorite(pkg.id)}
-                        className="absolute top-4 left-4 p-2 bg-white/80 backdrop-blur rounded-full text-primary shadow hover:scale-110 active:scale-90 transition-all z-10"
-                      >
-                        <Heart className={`h-4 w-4 ${favorites.includes(pkg.id.split('-')[0]) ? 'fill-primary' : ''}`} />
-                      </button>
+            {loading ? (
+              <div className="w-full text-center py-10 font-bold text-gray-400">Loading dynamic itineraries...</div>
+            ) : filteredPackages.length === 0 ? (
+              <div className="w-full text-center py-10 text-xs italic text-gray-400">No itineraries available for this category yet.</div>
+            ) : (
+              <AnimatePresence mode="wait">
+                {filteredPackages.map((pkg) => {
+                  const highlights = typeof pkg.highlights === 'string'
+                    ? pkg.highlights.split(/,\s*/)
+                    : (pkg.highlights || []);
 
-                      <div className="absolute top-4 right-4 rounded-full bg-[#e4a435] text-[#3d1f17] px-3 py-1 text-[10px] font-black uppercase tracking-wider">
-                        {pkg.category}
-                      </div>
-                    </div>
-
-                    <div className="p-6 space-y-4">
-                      <div>
-                        <h3 className="font-extrabold text-lg text-[#4a241a] group-hover:text-primary transition-colors">
-                          {pkg.name}
-                        </h3>
-                        <p className="text-xs font-bold text-primary mt-1">
-                          ⏱ {pkg.duration}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-[#e4a435] text-[#e4a435]" />
-                          <span className="text-xs font-black">{pkg.rating}</span>
-                        </div>
-                        <span className="text-xs text-[#6f5a52] font-semibold">
-                          {pkg.reviews} traveller reviews
-                        </span>
-                      </div>
-
-                      <ul className="space-y-2 border-t border-gray-200/60 pt-4">
-                        {pkg.highlights.slice(0, 3).map((h) => (
-                          <li
-                            key={h}
-                            className="flex items-center gap-2 text-xs font-bold text-[#6f5a52]"
+                  return (
+                    <div
+                      key={pkg.id}
+                      className="min-w-full md:min-w-[48%] lg:min-w-[31.5%] flex-shrink-0 group"
+                    >
+                      <div className="card-hover rounded-2xl overflow-hidden bg-[#f7f2ea] border border-gray-200 shadow-md">
+                        <div className="image-zoom relative h-60 overflow-hidden">
+                          {pkg.image && (
+                            <img
+                              src={pkg.image}
+                              alt={pkg.name}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              loading="lazy"
+                            />
+                          )}
+                          
+                          <button
+                            onClick={() => toggleFavorite(String(pkg.id))}
+                            className="absolute top-4 left-4 p-2 bg-white/80 backdrop-blur rounded-full text-primary shadow hover:scale-110 active:scale-90 transition-all z-10"
                           >
-                            <Check className="h-3.5 w-3.5 text-primary shrink-0" />
-                            <span>{h}</span>
-                          </li>
-                        ))}
-                      </ul>
+                            <Heart className={`h-4 w-4 ${favorites.includes(String(pkg.id)) ? 'fill-primary' : ''}`} />
+                          </button>
 
-                      <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
-                        <div>
-                          <span className="text-[10px] uppercase font-black tracking-widest text-[#6f5a52]">
-                            Starting From
-                          </span>
-                          <p className="text-xl font-black text-primary">
-                            ${pkg.startingPrice}
-                          </p>
+                          <div className="absolute top-4 right-4 rounded-full bg-[#e4a435] text-[#3d1f17] px-3 py-1 text-[10px] font-black uppercase tracking-wider">
+                            {pkg.destination_id}
+                          </div>
                         </div>
 
-                        <button
-                          onClick={handleInquire}
-                          className="flex items-center gap-1.5 bg-primary hover:bg-[#b83f1d] text-white text-xs font-black uppercase tracking-widest px-5 py-3 rounded-full transition-all shadow"
-                        >
-                          Inquire <ArrowRight className="h-3.5 w-3.5" />
-                        </button>
+                        <div className="p-6 space-y-4">
+                          <div>
+                            <h3 className="font-extrabold text-lg text-[#4a241a] group-hover:text-primary transition-colors line-clamp-1">
+                              {pkg.name}
+                            </h3>
+                            <p className="text-xs font-bold text-primary mt-1">
+                              ⏱ {pkg.duration}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
+                              <Star className="h-4 w-4 fill-[#e4a435] text-[#e4a435]" />
+                              <span className="text-xs font-black">5.0</span>
+                            </div>
+                            <span className="text-xs text-[#6f5a52] font-semibold">
+                              Highly Rated
+                            </span>
+                          </div>
+
+                          <ul className="space-y-2 border-t border-gray-200/60 pt-4">
+                            {highlights.slice(0, 3).map((h, i) => (
+                              <li
+                                key={i}
+                                className="flex items-center gap-2 text-xs font-bold text-[#6f5a52] line-clamp-1"
+                              >
+                                <Check className="h-3.5 w-3.5 text-primary shrink-0" />
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
+                            <div>
+                              <span className="text-[10px] uppercase font-black tracking-widest text-[#6f5a52]">
+                                Starting From
+                              </span>
+                              <p className="text-xl font-black text-primary">
+                                ${pkg.price}
+                              </p>
+                            </div>
+
+                            <button
+                              onClick={handleInquire}
+                              className="flex items-center gap-1.5 bg-primary hover:bg-[#b83f1d] text-white text-xs font-black uppercase tracking-widest px-5 py-3 rounded-full transition-all shadow"
+                            >
+                              Inquire <ArrowRight className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </AnimatePresence>
+                  );
+                })}
+              </AnimatePresence>
+            )}
           </div>
         </div>
       </div>

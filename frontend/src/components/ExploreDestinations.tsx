@@ -1,15 +1,28 @@
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchDestinations, Destination } from '../lib/admin-api';
 
 export default function ExploreDestinations() {
-  const countries = [
-    { name: 'Kenya', img: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=150&q=80' },
-    { name: 'Uganda', img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=150&q=80' },
-    { name: 'Tanzania', img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=150&q=80' },
-    { name: 'South Africa', img: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=150&q=80' },
-    { name: 'Rwanda', img: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=150&q=80' },
-    { name: 'Botswana', img: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=150&q=80' },
-    { name: 'Namibia', img: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=150&q=80' },
-  ];
+  const navigate = useNavigate();
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDestinations()
+      .then((data) => {
+        setDestinations(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching destinations:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleCountryClick = (id: string) => {
+    navigate(`/destination/${id}`);
+  };
 
   return (
     <section className="py-16 bg-[#f7f2ea] text-[#3d1f17] font-sans">
@@ -17,21 +30,24 @@ export default function ExploreDestinations() {
         
         {/* Country Badges Section */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-10 mb-16">
-          {countries.map((country, idx) => (
+          {!loading && destinations.map((country, idx) => (
             <motion.div
-              key={idx}
+              key={country.id}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
+              onClick={() => handleCountryClick(country.id)}
               className="flex flex-col items-center gap-2 cursor-pointer group"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-md group-hover:border-primary transition-all">
-                <img
-                  src={country.img}
-                  alt={country.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                {country.image && (
+                  <img
+                    src={country.image}
+                    alt={country.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                )}
               </div>
               <span className="text-xs md:text-sm font-black uppercase tracking-wider group-hover:text-primary transition-colors">
                 {country.name}
@@ -80,3 +96,4 @@ export default function ExploreDestinations() {
     </section>
   );
 }
+
