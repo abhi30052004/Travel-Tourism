@@ -14,7 +14,7 @@ export default function ExploreDestinations() {
   return (
     <section className="py-16 bg-[#f7f2ea] text-[#3d1f17] font-sans">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        
+
         {/* Country Badges Section */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-10 mb-16">
           {countries.map((country, idx) => (
