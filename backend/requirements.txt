@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-dotenv
+cors
+langchain-core
+langchain-openai
+langchain-anthropic
+openai
+feedparser
+APScheduler
+psycopg[binary]
