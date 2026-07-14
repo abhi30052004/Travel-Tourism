@@ -74,6 +74,7 @@ app.include_router(agent_runs_router, dependencies=[Depends(require_admin)])
 
 
 @app.get("/")
+@app.head("/")
 def root():
     return {
         "application": APP_NAME,
