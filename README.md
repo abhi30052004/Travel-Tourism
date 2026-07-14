@@ -1,5 +1,7 @@
 # City Canvas
 
+**Deployed Frontend:** [https://city-travel01.vercel.app/](https://city-travel01.vercel.app/)
+
 City Canvas is a travel content automation platform for Neem Journeys / Virtual Holidays. It combines a public travel website with an admin dashboard and AI-assisted editorial pipeline for collecting RSS travel stories, scoring them, generating platform-specific posts, validating brand tone, generating campaign images, and preparing content for publishing.
 
 The project is built as a full-stack application:
